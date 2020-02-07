@@ -1,0 +1,35 @@
+Terminal 1:
+./baxter.sh alan.local
+catkin_make
+source devel/setup.bash
+rosrun intera_interface enable_robot.py -e
+rosrun intera_interface joint_trajectory_action_server.py
+
+
+Terminal 2:
+./baxter.sh alan.local
+catkin_make
+source devel/setup.bash
+roslaunch sawyer_moveit_config sawyer_moveit.launch #electric_gripper:=true
+
+
+Terminal 3: subscriber
+./baxter.sh alan.local
+catkin_make
+source devel/setup.bash
+rosrun planning plan_draw.py
+
+
+Terminal 4: publisher
+./baxter.sh alan.local
+catkin_make
+source devel/setup.bash
+rosrun planning point_sender.py
+
+Terminal 5: camera
+catkin_make
+source devel/setup.bash
+roslaunch lab4_cam run_cam.launch
+rosrun image_view image_view image:=/usb_cam/image_raw
+rosrun planning subscriber.py
+
